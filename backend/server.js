@@ -1,7 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
-
+const { connect } = require('./config/database.js');
 
 dotenv.config();
 
@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.listen(PORT, async()=>{
     console.log(`Server Started : ${PORT}`);
+    await connect();
+    console.log('Database connection established');
 })
 
 
