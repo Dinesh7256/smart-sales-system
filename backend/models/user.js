@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 const userSchema = new mongoose.Schema({
     businessName: {
@@ -16,7 +17,13 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    passwordResetToken:{
+        type: String 
+    },
+    passwordResetExpires: {
+        type: Date
+    }   
 }, {
     timestamps: true 
 });
@@ -38,6 +45,20 @@ userSchema.methods.genJWT = function generate() {
         expiresIn: '1h'
     });
 }
+
+userSchema.methods.createPasswordResetToken = function() {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    this.passwordResetToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
+    
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+    return resetToken; // Return the unhashed token to be sent via email
+};
 
 const User = mongoose.model('User', userSchema);
 
