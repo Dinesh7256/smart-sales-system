@@ -5,6 +5,7 @@ import { connect } from './config/database.js';
 import apiroutes from './routes/index.js';
 import passport from 'passport';
 import { passportAuth } from './config/jwt-middleware.js';
+import productSchema from './models/product.js';
 // import sendBasicMail from './service/email-service.js';  
 
 dotenv.config();
@@ -41,6 +42,17 @@ app.listen(PORT, async()=>{
 // });
     await connect();
     console.log('Database connection established');
+    // const product = new productSchema({
+    //     productName: 'Sample Product',
+    //     costPrice: 100,
+    //     sellingPrice: 150,
+    //     quantityInStock: 50,
+    //     ownerId: '689c59801f58424fed98f3ab'
+    // });
+
+    // await product.save();
+    // console.log('Sample product created');
+
 })
 
 

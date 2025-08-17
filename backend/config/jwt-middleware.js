@@ -6,23 +6,30 @@ const ExtractJwt = JWT.ExtractJwt;
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'posts_secret'
+    secretOrKey: 'smart-sales-service_secret'
 }
 
 export const passportAuth = (passport) => {
     try {
         passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
-            console.log("req sent to strategy");
-            const user = await User.findById(jwt_payload.id);
-            if(!user) {
-                done(null, false);
-            } else {
-                done(null, user);
+            console.log("JWT Strategy called with payload:", jwt_payload);
+            try {
+                const user = await User.findById(jwt_payload.id);
+                console.log("User found:", user ? "Yes" : "No");
+                if(!user) {
+                    console.log("User not found in database");
+                    done(null, false);
+                } else {
+                    console.log("User authenticated successfully");
+                    done(null, user);
+                }
+            } catch (dbError) {
+                console.log("Database error:", dbError);
+                done(dbError, false);
             }
         }));
     } catch(err) {
-        console.log(err);
+        console.log("Passport strategy setup error:", err);
         throw err;
     }
-    
 }
