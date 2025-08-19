@@ -16,8 +16,23 @@ const login = async (email, password) => {
     return response.data;
 };
 
+const logout = () => {
+    localStorage.removeItem('token');
+};
+
+const signup = async (businessName, email, password) => {
+    const response = await axios.post(`${API_URL}/signup`, {
+        businessName,
+        email,
+        password,
+    });
+    return response.data;
+};
+
 const authService = {
     login,
+    logout,
+    signup,
 };
 
 export default authService;

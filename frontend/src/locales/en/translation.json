@@ -1,9 +1,17 @@
 {
   "login": {
-    "title": "Login",
-    "email": "Email",
+    "title": "Welcome Back!",
+    "email": "Email Address",
     "password": "Password",
     "button": "Login",
     "error": "Login failed. Please check your credentials."
+  },
+  "register": {
+    "title": "Create Your Account",
+    "businessName": "Business Name",
+    "email": "Email Address",
+    "password": "Password",
+    "button": "Sign Up",
+    "backToLogin": "Already have an account? Sign In"
   }
 }

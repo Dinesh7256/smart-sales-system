@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { Container, Box, Typography, TextField, Button, Switch, FormControlLabel, Paper, CircularProgress, Backdrop } from '@mui/material';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Container, Box, Typography, TextField, Button, Switch, FormControlLabel, Paper, CircularProgress, Backdrop, Link } from '@mui/material';
 import authService from '../services/authService';
 
 const MIN_LOADING_TIME = 1500; // 1.5 seconds for smooth transition
@@ -48,9 +48,6 @@ const LoginPage = () => {
             <Backdrop open={loading} sx={{ color: '#1976d2', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <CircularProgress size={64} thickness={5} color="primary" />
-                    <Typography variant="h6" sx={{ mt: 2, color: '#1976d2', fontWeight: 500 }}>
-                        {t('login.loading') || 'Logging in...'}
-                    </Typography>
                 </Box>
             </Backdrop>
             <Paper elevation={6} sx={{ borderRadius: 4, width: '100%', p: 4, background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
@@ -99,6 +96,9 @@ const LoginPage = () => {
                         >
                             {t('login.button')}
                         </Button>
+                        <Link component={RouterLink} to="/register" variant="body2" sx={{ display: 'block', textAlign: 'center', mt: 1 }}>
+                            {t('registerTitle')}
+                        </Link>
                     </Box>
                 </Box>
             </Paper>
