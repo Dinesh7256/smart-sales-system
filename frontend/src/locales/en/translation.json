@@ -1,0 +1,9 @@
+{
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login",
+    "error": "Login failed. Please check your credentials."
+  }
+}

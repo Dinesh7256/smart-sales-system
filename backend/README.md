@@ -38,3 +38,7 @@ GET /products/:id → Get product by ID
 GET /products/search?minPrice=&maxPrice= → Filter by price
 PUT /products/:id → Update product
 DELETE /products/:id → Delete product
+
+http://localhost:5001/api/v1/
+
+POST/sales → create the Daily Sales record

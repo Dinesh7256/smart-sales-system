@@ -5,6 +5,7 @@ import { connect } from './config/database.js';
 import apiroutes from './routes/index.js';
 import passport from 'passport';
 import { passportAuth } from './config/jwt-middleware.js';
+import cors from 'cors';
 // import productSchema from './models/product.js';
 // import sendBasicMail from './service/email-service.js';  
 
@@ -13,6 +14,7 @@ dotenv.config();
 const PORT = process.env.PORT;
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
