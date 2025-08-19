@@ -25,25 +25,16 @@ Auth (Public)--
 http://localhost:5001/api/v1/
 
 POST /signup → Register user
-
 POST /login → Login & get JWT
-
 POST /forgot-password → Send reset link
-
 PATCH /reset-password/:token → Reset password
-
 Products (Protected - requires Authorization: Bearer <token>)
 
 http://localhost:5001/api/v1/
 
 POST /products → Create product
-
 GET /products → Get all products
-
 GET /products/:id → Get product by ID
-
 GET /products/search?minPrice=&maxPrice= → Filter by price
-
 PUT /products/:id → Update product
-
 DELETE /products/:id → Delete product

@@ -5,7 +5,7 @@ import { connect } from './config/database.js';
 import apiroutes from './routes/index.js';
 import passport from 'passport';
 import { passportAuth } from './config/jwt-middleware.js';
-import productSchema from './models/product.js';
+// import productSchema from './models/product.js';
 // import sendBasicMail from './service/email-service.js';  
 
 dotenv.config();
@@ -40,6 +40,7 @@ app.listen(PORT, async()=>{
 //     }
 //     console.log(res);
 // });
+
     await connect();
     console.log('Database connection established');
     // const product = new productSchema({

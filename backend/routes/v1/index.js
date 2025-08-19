@@ -5,6 +5,8 @@ import { forgotPassword } from '../../controllers/auth-controller.js';
 import { resetPassword } from '../../controllers/auth-controller.js';
 import productRoutes from './product-routes.js';
 
+import salesRoutes from './sales-routes.js';
+
 const router = express.Router();
 
 // Authentication routes (public)
@@ -15,5 +17,8 @@ router.patch('/reset-password/:token', resetPassword);
 
 // Product routes (protected)
 router.use('/products', productRoutes);
+
+// Sales routes (protected)
+router.use('/sales', salesRoutes);
 
 export default router;

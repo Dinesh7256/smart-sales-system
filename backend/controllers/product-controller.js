@@ -14,26 +14,34 @@ const sendErrorResponse = (res, error) => {
 
 export const addProduct = async (req, res) => {
     try {
-        // Get the logged-in user's ID from req.user (set by Passport.js)
         const userId = req.user.id;
-        
-        // Add the user ID to the product data
-        const productData = {
-            ...req.body,
-            createdBy: userId,
-            updatedBy: userId
-        };
+        let productData = req.body;
+        // If array, add createdBy/updatedBy to each
+        if (Array.isArray(productData)) {
+            productData = productData.map(item => ({
+                ...item,
+                createdBy: userId,
+                updatedBy: userId
+            }));
+        } else {
+            productData = {
+                ...productData,
+                createdBy: userId,
+                updatedBy: userId
+            };
+        }
 
         const response = await productService.createProduct(productData);
         return res.status(201).json({
             success: true,
-            message: 'Successfully created a new product',
+            message: Array.isArray(response) ? 'Successfully created products' : 'Successfully created a new product',
             data: response,
             err: {}
         });
     } catch(error) {
         if (error.message === 'Product name and cost price are required' || 
-            error.message === 'Product with this name already exists') {
+            error.message === 'Product with this name already exists' ||
+            error.message === 'Product array cannot be empty') {
             return res.status(400).json({
                 success: false,
                 message: error.message,
@@ -72,10 +80,6 @@ export const getProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try {
-        // Optional: Filter by logged-in user's products
-        // const userId = req.user.id;
-        // You can modify the service to filter by createdBy: userId if needed
-        
         const response = await productService.getAllProducts();
         return res.status(200).json({
             success: true,
@@ -93,7 +97,6 @@ export const updateProduct = async (req, res) => {
         const productId = req.params.id;
         const userId = req.user.id;
         
-        // Add the user ID to track who updated the product
         const updateData = {
             ...req.body,
             updatedBy: userId

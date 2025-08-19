@@ -7,24 +7,32 @@ class ProductService {
 
     async createProduct(data) {
         try {
-            // Validate required fields
-            if (!data.productName || !data.costPrice) {
-                throw {
-                    message: 'Product name and cost price are required'
-                };
+            // If data is an array, handle bulk insert
+            if (Array.isArray(data)) {
+                if (data.length === 0) {
+                    throw { message: 'Product array cannot be empty' };
+                }
+                // Validate all items
+                for (const item of data) {
+                    if (!item.productName || !item.costPrice) {
+                        throw { message: 'Product name and cost price are required' };
+                    }
+                }
+                // Use insertMany for bulk insert (skip duplicate name check for performance)
+                const products = await this.productRepository.model.insertMany(data);
+                return products;
+            } else {
+                // Single product logic
+                if (!data.productName || !data.costPrice) {
+                    throw { message: 'Product name and cost price are required' };
+                }
+                const existingProduct = await this.productRepository.findByName(data.productName);
+                if (existingProduct) {
+                    throw { message: 'Product with this name already exists' };
+                }
+                const product = await this.productRepository.create(data);
+                return product;
             }
-
-            // Check if product already exists
-            const existingProduct = await this.productRepository.findByName(data.productName);
-            if (existingProduct) {
-                throw {
-                    message: 'Product with this name already exists'
-                };
-            }
-
-            // Create the product
-            const product = await this.productRepository.create(data);
-            return product;
         } catch(error) {
             throw error;
         }

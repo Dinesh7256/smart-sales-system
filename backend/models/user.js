@@ -42,7 +42,7 @@ userSchema.methods.comparePassword = function compare(password) {
 
 userSchema.methods.genJWT = function generate() {
     return jwt.sign({id: this._id, email: this.email}, 'smart-sales-service_secret', {
-        expiresIn: '1h'
+        expiresIn: '5h'
     });
 }
 
