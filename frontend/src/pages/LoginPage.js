@@ -99,6 +99,9 @@ const LoginPage = () => {
                         <Link component={RouterLink} to="/register" variant="body2" sx={{ display: 'block', textAlign: 'center', mt: 1 }}>
                             {t('registerTitle')}
                         </Link>
+                        <Link component={RouterLink} to="/forgot-password" variant="body2" sx={{ display: 'block', textAlign: 'center', mt: 1 }}>
+                            Forgot Password?
+                        </Link>
                     </Box>
                 </Box>
             </Paper>
