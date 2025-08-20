@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage'; 
 import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import InventoryPage from './pages/InventoryPage';
+import ExpensesPage from './pages/ExpensesPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 
@@ -18,10 +20,12 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
         {/* This is the protected section */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/" element={<DashboardPage />} /> {/* Default to dashboard if logged in */}
-        </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/inventory" element={<InventoryPage />} />
+              <Route path="/expenses" element={<ExpensesPage />} />
+              <Route path="/" element={<DashboardPage />} /> {/* Default to dashboard if logged in */}
+            </Route>
       </Routes>
     </Router>
   );
