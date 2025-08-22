@@ -8,6 +8,8 @@ import ProfitMeter from '../components/dashboard/ProfitMeter';
 import LogExpenseModal from '../components/expenses/LogExpenseModal';
 import expenseService from '../services/expenseService';
 import LowStockAlert from '../components/dashboard/LowStockAlert';
+import { Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 const MIN_LOADING_TIME = 1500;
 
@@ -57,40 +59,51 @@ const DashboardPage = () => {
     };
 
     return (
-        <Container>
-            <Backdrop open={loading} sx={{ color: '#1976d2', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                <CircularProgress size={64} thickness={5} color="primary" />
-            </Backdrop>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '32px' }}>
-                <Typography variant="h4">
-                    Welcome to your Dashboard!
-                </Typography>
-                <div>
-                    <Button component={RouterLink} to="/inventory" variant="outlined" sx={{ mr: 2 }}>
-                        Manage Inventory
-                    </Button>
-                    <Button component={RouterLink} to="/expenses" variant="outlined" sx={{ mr: 2 }}>
-                        View Expenses
-                    </Button>
-                    <Button variant="outlined" color="secondary" sx={{ mr: 2 }} onClick={() => setExpenseModalOpen(true)}>
-                        Log Expense
-                    </Button>
-                    <Button variant="contained" onClick={handleLogout}>
-                        Logout
-                    </Button>
+        <>
+            <Container>
+                <Backdrop open={loading} sx={{ color: '#1976d2', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                    <CircularProgress size={64} thickness={5} color="primary" />
+                </Backdrop>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '32px' }}>
+                    <Typography variant="h4">
+                        Welcome to your Dashboard!
+                    </Typography>
+                    <div>
+                        <Button component={RouterLink} to="/inventory" variant="outlined" sx={{ mr: 2 }}>
+                            Manage Inventory
+                        </Button>
+                        <Button component={RouterLink} to="/expenses" variant="outlined" sx={{ mr: 2 }}>
+                            View Expenses
+                        </Button>
+                        <Button variant="outlined" color="secondary" sx={{ mr: 2 }} onClick={() => setExpenseModalOpen(true)}>
+                            Log Expense
+                        </Button>
+                        <Button variant="contained" onClick={handleLogout}>
+                            Logout
+                        </Button>
+                    </div>
                 </div>
-            </div>
-            {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
-            <Grid container spacing={3} sx={{ mt: 2 }}>
-                <Grid item xs={12} md={6}>
-                    <ProfitMeter sales={sales} expenses={expenses} />
+                {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+                <Grid container spacing={3} sx={{ mt: 2 }}>
+                    <Grid item xs={12} md={6}>
+                        <ProfitMeter sales={sales} expenses={expenses} />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <LowStockAlert products={products} />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <LowStockAlert products={products} />
-                </Grid>
-            </Grid>
-            <LogExpenseModal open={expenseModalOpen} handleClose={() => setExpenseModalOpen(false)} onExpenseLogged={handleExpenseLogged} />
-        </Container>
+                <LogExpenseModal open={expenseModalOpen} handleClose={() => setExpenseModalOpen(false)} onExpenseLogged={handleExpenseLogged} />
+            </Container>
+            <Fab
+                color="primary"
+                aria-label="add sale"
+                component={RouterLink}
+                to="/add-sale"
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+            >
+                <AddIcon />
+            </Fab>
+        </>
     );
 };
 

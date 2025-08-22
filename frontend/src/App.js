@@ -1,14 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage'; 
+import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import InventoryPage from './pages/InventoryPage';
 import ExpensesPage from './pages/ExpensesPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import AddSalePage from './pages/AddSalePage';
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/inventory" element={<InventoryPage />} />
               <Route path="/expenses" element={<ExpensesPage />} />
+              <Route path="/add-sale" element={<AddSalePage />} /> {/* Add this route */}
               <Route path="/" element={<DashboardPage />} /> {/* Default to dashboard if logged in */}
             </Route>
       </Routes>
