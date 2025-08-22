@@ -1,3 +1,26 @@
+export const restockProduct = async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const { quantityToAdd } = req.body;
+        if (!quantityToAdd || isNaN(quantityToAdd) || quantityToAdd <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Valid quantityToAdd is required',
+                data: {},
+                err: 'Bad Request'
+            });
+        }
+        const updated = await productService.restockProduct(productId, Number(quantityToAdd));
+        return res.status(200).json({
+            success: true,
+            message: 'Product restocked successfully',
+            data: updated,
+            err: {}
+        });
+    } catch (error) {
+        return sendErrorResponse(res, error);
+    }
+};
 import ProductService from "../service/product-service.js";
 
 const productService = new ProductService();
@@ -16,18 +39,16 @@ export const addProduct = async (req, res) => {
     try {
         const userId = req.user.id;
         let productData = req.body;
-        // If array, add createdBy/updatedBy to each
+        // If array, add ownerId to each
         if (Array.isArray(productData)) {
             productData = productData.map(item => ({
                 ...item,
-                createdBy: userId,
-                updatedBy: userId
+                ownerId: userId
             }));
         } else {
             productData = {
                 ...productData,
-                createdBy: userId,
-                updatedBy: userId
+                ownerId: userId
             };
         }
 

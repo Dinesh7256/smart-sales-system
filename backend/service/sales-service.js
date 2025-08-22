@@ -4,6 +4,14 @@ import Product from '../models/product.js';
 
 class SalesService {
     /**
+     * Get all sales for a specific user
+     * @param {String} ownerId - The user ID
+     * @returns {Array} List of DailySales documents
+     */
+    async getSalesByOwner(ownerId) {
+        return DailySales.find({ ownerId }).sort({ date: -1 });
+    }
+    /**
      * Create a daily sales record and update product stock atomically
      * @param {String} ownerId - The user ID
      * @param {Array} itemsSold - Array of { productId, quantitySold }

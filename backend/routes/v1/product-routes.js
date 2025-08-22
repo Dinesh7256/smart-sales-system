@@ -1,3 +1,4 @@
+
 import express from 'express';
 import { 
     addProduct, 
@@ -5,11 +6,15 @@ import {
     getAllProducts, 
     updateProduct, 
     deleteProduct, 
-    getProductsByPriceRange 
+    getProductsByPriceRange, 
+    restockProduct 
 } from '../../controllers/product-controller.js';
 import { authenticate } from '../../middlewares/authenticate.js';
 
 const router = express.Router();
+
+// PATCH /api/v1/products/:id/restock - Restock a product
+router.patch('/:id/restock', authenticate, restockProduct);
 
 // All product routes require authentication
 // POST /api/v1/products - Create a new product

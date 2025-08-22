@@ -1,13 +1,16 @@
+
 import express from 'express';
 import { signup } from '../../controllers/auth-controller.js';
 import { login } from '../../controllers/auth-controller.js';
 import { forgotPassword } from '../../controllers/auth-controller.js';
 import { resetPassword } from '../../controllers/auth-controller.js';
 import productRoutes from './product-routes.js';
-
 import salesRoutes from './sales-routes.js';
+import expenseRoutes from './expense-routes.js';
 
 const router = express.Router();
+// Expense routes (protected)
+router.use('/expenses', expenseRoutes);
 
 // Authentication routes (public)
 router.post('/signup', signup);

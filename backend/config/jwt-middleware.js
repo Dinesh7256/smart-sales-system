@@ -15,15 +15,15 @@ const opts = {
 export const passportAuth = (passport) => {
     try {
         passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
-            console.log("JWT Strategy called with payload:", jwt_payload);
+            // console.log("JWT Strategy called with payload:", jwt_payload);
             try {
                 const user = await User.findById(jwt_payload.id);
-                console.log("User found:", user ? "Yes" : "No");
+                // console.log("User found:", user ? "Yes" : "No");
                 if(!user) {
                     console.log("User not found in database");
                     done(null, false);
                 } else {
-                    console.log("User authenticated successfully");
+                    // console.log("User authenticated successfully");
                     done(null, user);
                 }
             } catch (dbError) {

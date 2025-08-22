@@ -1,6 +1,8 @@
 import { UserRepository } from '../repository/index.js';
 import sendBasicMail from './email-service.js';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class UserService {
     constructor() {
@@ -60,7 +62,8 @@ async handleForgotPassword(email) {
         const resetToken = user.createPasswordResetToken();
         await user.save(); // Using save() here is okay as it triggers Mongoose middleware
 
-        const resetURL = `http://your-frontend-url/reset-password/${resetToken}`;
+        // Use the correct frontend URL from environment variables
+        const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
         const mailBody = `You are receiving this email because you have requested the reset of a password. Please click the link to complete the process: \n\n ${resetURL} \n\nIf you did not request this, please ignore this email.`;
 
         await sendBasicMail(process.env.EMAIL_ID, user.email, 'Your Password Reset Link', mailBody);

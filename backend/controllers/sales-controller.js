@@ -1,3 +1,23 @@
+// Get all sales for the logged-in user
+export const getSales = async (req, res) => {
+    try {
+        const ownerId = req.user.id;
+        const sales = await salesService.getSalesByOwner(ownerId);
+        return res.status(200).json({
+            success: true,
+            message: 'Sales fetched successfully',
+            data: sales,
+            err: {}
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || 'Something went wrong',
+            data: {},
+            err: 'Internal Server Error'
+        });
+    }
+};
 import SalesService from '../service/sales-service.js';
 
 const salesService = new SalesService();
@@ -30,3 +50,4 @@ export const createDailySale = async (req, res) => {
         });
     }
 };
+

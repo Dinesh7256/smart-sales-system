@@ -1,8 +1,19 @@
+
 import { productRepository } from '../repository/index.js';
 
 class ProductService {
     constructor() {
         this.productRepository = productRepository;
+    }
+
+    async restockProduct(id, quantityToAdd) {
+        const product = await this.productRepository.get(id);
+        if (!product) {
+            throw { message: 'Product not found' };
+        }
+        product.quantityInStock += quantityToAdd;
+        await product.save();
+        return product;
     }
 
     async createProduct(data) {
