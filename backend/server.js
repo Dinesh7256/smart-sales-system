@@ -19,7 +19,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-
 app.use(passport.initialize());
 passportAuth(passport);
 app.use('/api', apiroutes);
@@ -54,7 +53,8 @@ app.listen(PORT, async()=>{
     // });
 
     // await product.save();
-    // console.log('Sample product created');
+    // console.log('Sample product created')
+
 
 })
 
