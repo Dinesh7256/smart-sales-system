@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:5001/api/v1'; // Use your backend's port
+import { API_URL } from '../config/api';
 
 const login = async (email, password) => {
     const response = await axios.post(`${API_URL}/login`, {

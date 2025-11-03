@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:5001/api/v1';
+import { API_URL } from '../config/api';
 
 const getSales = async () => {
     const token = localStorage.getItem('token');
