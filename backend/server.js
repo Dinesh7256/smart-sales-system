@@ -11,7 +11,7 @@ import cors from 'cors';
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5001;
 const app = express();
 
 app.use(cors());
@@ -21,10 +21,17 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(passport.initialize());
 passportAuth(passport);
+
+// Health check endpoint
+app.get('/', (req, res) => {
+    res.json({ message: 'Smart Sales System API is running!', status: 'healthy' });
+});
+
 app.use('/api', apiroutes);
 
 app.listen(PORT, async()=>{
     console.log(`Server Started : ${PORT}`);
+    await connect(); // Connect to database when server starts
 
     // sendBasicMail('smartsales634@gmail.com', 'namrata99sb@gmail.com', 'This is testing email from your project', 'hello namrata I had implemented email service in our projectn');
 //     var email = {
