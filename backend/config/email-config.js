@@ -1,16 +1,16 @@
 // backend/config/email-config.js
 import nodemailer from 'nodemailer';
+import sgmail from 'nodemailer-sendgrid-transport';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Gmail SMTP configuration (more reliable and higher limits)
-const sender = nodemailer.createTransporter({
-    service: 'gmail',
+const options = {
     auth: {
-        user: process.env.EMAIL_ID,
-        pass: process.env.EMAIL_PASSWORD
+        api_key: process.env.SENDGRID_API_KEY 
     }
-});
+}
+
+const sender = nodemailer.createTransporter(sgmail(options));
 
 export default sender;

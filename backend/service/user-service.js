@@ -66,20 +66,9 @@ async handleForgotPassword(email) {
         const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
         const mailBody = `You are receiving this email because you have requested the reset of a password. Please click the link to complete the process: \n\n ${resetURL} \n\nIf you did not request this, please ignore this email.`;
 
-        try {
-            await sendBasicMail(process.env.EMAIL_ID, user.email, 'Your Password Reset Link', mailBody);
-            return true; // Indicate success
-        } catch (emailError) {
-            console.error("Email sending failed:", emailError.message);
-            
-            // If it's a SendGrid credit limit error, provide helpful message
-            if (emailError.message.includes('Maximum credits exceeded')) {
-                throw new Error('Email service temporarily unavailable. Please try again later or contact support.');
-            }
-            
-            // For other email errors, still save the reset token but inform user
-            throw new Error('Failed to send reset email. Please try again later.');
-        }
+        await sendBasicMail(process.env.EMAIL_ID, user.email, 'Your Password Reset Link', mailBody);
+
+        return true; // Indicate success
     } catch (error) {
         console.error("Error in handleForgotPassword service:", error);
         throw error;
