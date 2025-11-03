@@ -1,9 +1,12 @@
 [build]
-  publish = "build"
-  command = "npm run build"
   base = "frontend"
+  command = "npm run build"
+  publish = "build"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[build.environment]
+  REACT_APP_API_URL = "https://smart-sales-system.onrender.com"
