@@ -11,6 +11,6 @@ const options = {
     }
 }
 
-const sender = nodemailer.createTransporter(sgmail(options));
+const sender = nodemailer.createTransport(sgmail(options));
 
 export default sender;
