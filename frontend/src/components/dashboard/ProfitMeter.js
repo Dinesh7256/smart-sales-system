@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box, Chip, Avatar } from '@mui/material';
+import { TrendingUp, TrendingDown, AccountBalanceWallet } from '@mui/icons-material';
 
 const ProfitMeter = ({ sales, expenses }) => {
-    // Calculate total profit from the last 7 days
     const last7Days = new Date();
     last7Days.setDate(last7Days.getDate() - 7);
 
@@ -14,29 +14,60 @@ const ProfitMeter = ({ sales, expenses }) => {
 
     const netProfit = totalProfit - totalExpenses;
     const isProfit = netProfit >= 0;
-    const displayColor = isProfit ? 'success.main' : 'error.main'; // Green for profit, Red for loss
 
     return (
-        <Card>
+        <Card 
+            elevation={2}
+            sx={{ 
+                background: isProfit 
+                    ? 'linear-gradient(135deg, #4ECDC4 0%, #2A9D8F 100%)' 
+                    : 'linear-gradient(135deg, #FF6B6B 0%, #E55555 100%)',
+                color: 'white'
+            }}
+        >
             <CardContent>
-                <Typography variant="h6">
-                    Last 7 Days Performance
-                </Typography>
-                <Box sx={{
-                    my: 2,
-                    p: 3,
-                    bgcolor: displayColor,
-                    color: 'white',
-                    borderRadius: 1,
-                    textAlign: 'center'
-                }}>
-                    <Typography variant="h4">
-                        {isProfit ? 'Net Profit' : 'Net Loss'}: ₹{Math.abs(netProfit).toFixed(2)}
+                <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+                    <Typography variant="h6" fontWeight="600">
+                        Weekly Performance
                     </Typography>
+                    <Avatar 
+                        sx={{ 
+                            bgcolor: 'rgba(255,255,255,0.2)',
+                            color: 'white'
+                        }}
+                    >
+                        <AccountBalanceWallet />
+                    </Avatar>
                 </Box>
-                <Typography variant="body2" align="center">
-                    This is your net profit (sales profit minus expenses) over the last week.
-                </Typography>
+
+                <Box textAlign="center" py={2}>
+                    <Box display="flex" alignItems="center" justifyContent="center" mb={1}>
+                        {isProfit ? <TrendingUp sx={{ mr: 1 }} /> : <TrendingDown sx={{ mr: 1 }} />}
+                        <Typography variant="h4" fontWeight="700">
+                            ₹{Math.abs(netProfit).toFixed(0)}
+                        </Typography>
+                    </Box>
+                    <Chip 
+                        label={isProfit ? 'Profit' : 'Loss'} 
+                        size="small"
+                        sx={{ 
+                            bgcolor: 'rgba(255,255,255,0.2)', 
+                            color: 'white',
+                            fontWeight: 'bold'
+                        }} 
+                    />
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" mt={3}>
+                    <Box textAlign="center">
+                        <Typography variant="body2" sx={{ opacity: 0.9 }}>Sales</Typography>
+                        <Typography variant="h6" fontWeight="600">₹{totalProfit.toFixed(0)}</Typography>
+                    </Box>
+                    <Box textAlign="center">
+                        <Typography variant="body2" sx={{ opacity: 0.9 }}>Expenses</Typography>
+                        <Typography variant="h6" fontWeight="600">₹{totalExpenses.toFixed(0)}</Typography>
+                    </Box>
+                </Box>
             </CardContent>
         </Card>
     );

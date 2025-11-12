@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import { groceryTheme } from './theme/groceryTheme';
 import './App.css';
 
 import LoginPage from './pages/LoginPage';
@@ -14,23 +17,26 @@ import AddSalePage from './pages/AddSalePage';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} /> {/* Add this route */}
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+    <ThemeProvider theme={groceryTheme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-        {/* This is the protected section */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/inventory" element={<InventoryPage />} />
-              <Route path="/expenses" element={<ExpensesPage />} />
-              <Route path="/add-sale" element={<AddSalePage />} /> {/* Add this route */}
-              <Route path="/" element={<DashboardPage />} /> {/* Default to dashboard if logged in */}
-            </Route>
-      </Routes>
-    </Router>
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
+            <Route path="/expenses" element={<ExpensesPage />} />
+            <Route path="/add-sale" element={<AddSalePage />} />
+            <Route path="/" element={<DashboardPage />} />
+          </Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

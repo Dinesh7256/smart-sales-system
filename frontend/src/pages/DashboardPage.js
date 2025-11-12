@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Container, Typography, Button, Grid, Backdrop, CircularProgress } from '@mui/material';
+import { 
+    Container, Typography, Button, Grid, Box, Card, CardContent,
+    Chip, Avatar, AppBar, Toolbar, IconButton
+} from '@mui/material';
+import {
+    MenuBook as BahiIcon,
+    Add as AddIcon,
+    Inventory as InventoryIcon,
+    Receipt as ExpenseIcon,
+    ExitToApp as LogoutIcon,
+    AccountBalanceWallet as ExpenseLogIcon
+} from '@mui/icons-material';
 import authService from '../services/authService';
 import productService from '../services/productService';
 import salesService from '../services/salesService';
@@ -9,7 +20,6 @@ import LogExpenseModal from '../components/expenses/LogExpenseModal';
 import expenseService from '../services/expenseService';
 import LowStockAlert from '../components/dashboard/LowStockAlert';
 import { Fab } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 
 const MIN_LOADING_TIME = 1500;
 
@@ -58,33 +68,122 @@ const DashboardPage = () => {
         } catch {}
     };
 
+    if (loading) {
+        return (
+            <Box 
+                display="flex" 
+                flexDirection="column"
+                justifyContent="center" 
+                alignItems="center" 
+                minHeight="100vh"
+                sx={{ background: 'linear-gradient(135deg, #4ECDC4 0%, #2A9D8F 100%)' }}
+            >
+                <Avatar 
+                    sx={{ 
+                        width: 80, 
+                        height: 80, 
+                        mb: 2, 
+                        bgcolor: 'white',
+                        color: 'primary.main'
+                    }}
+                >
+                    <BahiIcon sx={{ fontSize: 40 }} />
+                </Avatar>
+                <Typography variant="h6" color="white" sx={{ fontWeight: 500 }}>
+                    Loading your store...
+                </Typography>
+            </Box>
+        );
+    }
+
     return (
-        <>
-            <Container>
-                <Backdrop open={loading} sx={{ color: '#1976d2', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                    <CircularProgress size={64} thickness={5} color="primary" />
-                </Backdrop>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '32px' }}>
-                    <Typography variant="h4">
-                        Welcome to your Dashboard!
-                    </Typography>
-                    <div>
-                        <Button component={RouterLink} to="/inventory" variant="outlined" sx={{ mr: 2 }}>
-                            Manage Inventory
-                        </Button>
-                        <Button component={RouterLink} to="/expenses" variant="outlined" sx={{ mr: 2 }}>
-                            View Expenses
-                        </Button>
-                        <Button variant="outlined" color="secondary" sx={{ mr: 2 }} onClick={() => setExpenseModalOpen(true)}>
-                            Log Expense
-                        </Button>
-                        <Button variant="contained" onClick={handleLogout}>
-                            Logout
-                        </Button>
-                    </div>
-                </div>
-                {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
-                <Grid container spacing={3} sx={{ mt: 2 }}>
+        <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+            {/* Header */}
+            <Card 
+                elevation={0} 
+                sx={{ 
+                    borderRadius: 0, 
+                    background: 'linear-gradient(135deg, #4ECDC4 0%, #2A9D8F 100%)',
+                    color: 'white',
+                    py: 2
+                }}
+            >
+                <Container>
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                        <Box display="flex" alignItems="center" gap={2}>
+                            <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)' }}>
+                                <BahiIcon />
+                            </Avatar>
+                            <Typography variant="h5" fontWeight="600">
+                                Bahi
+                            </Typography>
+                        </Box>
+                        <Box display="flex" gap={1}>
+                            <Button 
+                                component={RouterLink} 
+                                to="/inventory" 
+                                variant="outlined" 
+                                startIcon={<InventoryIcon />}
+                                sx={{ 
+                                    color: 'white', 
+                                    borderColor: 'rgba(255,255,255,0.3)',
+                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+                                }}
+                            >
+                                Inventory
+                            </Button>
+                            <Button 
+                                component={RouterLink} 
+                                to="/expenses" 
+                                variant="outlined"
+                                startIcon={<ExpenseIcon />}
+                                sx={{ 
+                                    color: 'white', 
+                                    borderColor: 'rgba(255,255,255,0.3)',
+                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+                                }}
+                            >
+                                Expenses
+                            </Button>
+                            <Button 
+                                variant="outlined" 
+                                startIcon={<ExpenseLogIcon />}
+                                onClick={() => setExpenseModalOpen(true)}
+                                sx={{ 
+                                    color: 'white', 
+                                    borderColor: 'rgba(255,255,255,0.3)',
+                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+                                }}
+                            >
+                                Log Expense
+                            </Button>
+                            <Button 
+                                variant="contained" 
+                                startIcon={<LogoutIcon />}
+                                onClick={handleLogout}
+                                sx={{ 
+                                    bgcolor: 'error.main',
+                                    '&:hover': { bgcolor: 'error.dark' }
+                                }}
+                            >
+                                Logout
+                            </Button>
+                        </Box>
+                    </Box>
+                </Container>
+            </Card>
+
+            {/* Main Content */}
+            <Container sx={{ py: 3 }}>
+                {error && (
+                    <Card sx={{ mb: 3, bgcolor: 'error.light', color: 'error.contrastText' }}>
+                        <CardContent>
+                            <Typography>{error}</Typography>
+                        </CardContent>
+                    </Card>
+                )}
+                
+                <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
                         <ProfitMeter sales={sales} expenses={expenses} />
                     </Grid>
@@ -92,18 +191,34 @@ const DashboardPage = () => {
                         <LowStockAlert products={products} />
                     </Grid>
                 </Grid>
-                <LogExpenseModal open={expenseModalOpen} handleClose={() => setExpenseModalOpen(false)} onExpenseLogged={handleExpenseLogged} />
             </Container>
+
+            {/* Add Sale FAB */}
             <Fab
                 color="primary"
                 aria-label="add sale"
                 component={RouterLink}
                 to="/add-sale"
-                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                sx={{ 
+                    position: 'fixed', 
+                    bottom: 24, 
+                    right: 24,
+                    background: 'linear-gradient(45deg, #FF6B6B 30%, #FF8E8E 90%)',
+                    '&:hover': {
+                        background: 'linear-gradient(45deg, #E55555 30%, #FF6B6B 90%)',
+                    }
+                }}
             >
                 <AddIcon />
             </Fab>
-        </>
+
+            {/* Expense Modal */}
+            <LogExpenseModal 
+                open={expenseModalOpen} 
+                handleClose={() => setExpenseModalOpen(false)} 
+                onExpenseLogged={handleExpenseLogged} 
+            />
+        </Box>
     );
 };
 
