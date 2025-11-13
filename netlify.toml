@@ -9,3 +9,4 @@
 
 [build.environment]
   REACT_APP_API_URL = "https://smart-sales-system.onrender.com"
+  # Force rebuild - Updated UI theme with Bahi branding
