@@ -30,8 +30,18 @@ app.get('/', (req, res) => {
 app.use('/api', apiroutes);
 
 app.listen(PORT, async()=>{
-    console.log(`Server Started : ${PORT}`);
-    await connect(); // Connect to database when server starts
+    console.log(`🚀 Server Started on PORT: ${PORT}`);
+    console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`📊 MongoDB URI exists: ${!!process.env.MONGODB_URI}`);
+    console.log(`🔑 JWT Secret exists: ${!!process.env.JWT_SECRET}`);
+    
+    try {
+        await connect(); // Connect to database when server starts
+        console.log('✅ Database connected successfully');
+    } catch (error) {
+        console.error('❌ Database connection failed:', error.message);
+        process.exit(1);
+    }
 
     // sendBasicMail('smartsales634@gmail.com', 'namrata99sb@gmail.com', 'This is testing email from your project', 'hello namrata I had implemented email service in our projectn');
 //     var email = {
