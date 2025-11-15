@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { 
-    Container, Typography, Button, Grid, Box, Card, CardContent,
-    Chip, Avatar, AppBar, Toolbar, IconButton
+    Container, Typography, Button, Grid, Box, Card, CardContent, Avatar
 } from '@mui/material';
 import {
     MenuBook as BahiIcon,
