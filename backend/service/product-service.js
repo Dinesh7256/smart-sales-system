@@ -76,9 +76,9 @@ class ProductService {
         }
     }
 
-    async getAllProducts() {
+    async getAllProducts(userId, productType = null) {
         try {
-            const products = await this.productRepository.getAll();
+            const products = await this.productRepository.getAllByUser(userId, productType);
             return products;
         } catch(error) {
             throw error;

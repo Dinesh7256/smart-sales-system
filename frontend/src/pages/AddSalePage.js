@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, List, ListItem, ListItemText, TextField, Button, Box, CircularProgress } from '@mui/material';
+import { Container, Typography, List, ListItem, ListItemText, TextField, Button, Box, CircularProgress, IconButton } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import productService from '../services/productService';
 import salesService from '../services/salesService';
 
@@ -55,22 +56,82 @@ const AddSalePage = () => {
     }
 
     return (
-        <Container maxWidth="sm">
-            <Typography variant="h4" sx={{ my: 4 }}>
-                Add Today's Sales
-            </Typography>
-            <List>
+        <Container maxWidth="sm" sx={{ px: { xs: 1, sm: 3 } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, my: { xs: 2, sm: 4 } }}>
+                <IconButton 
+                    onClick={() => navigate(-1)}
+                    sx={{ 
+                        color: 'text.primary',
+                        '&:hover': { bgcolor: 'action.hover' }
+                    }}
+                >
+                    <ArrowBack />
+                </IconButton>
+                <Typography 
+                    variant={{ xs: 'h5', sm: 'h4' }} 
+                    sx={{ 
+                        fontSize: { xs: '1.5rem', sm: '2rem' },
+                        fontWeight: 'bold',
+                        color: 'text.primary'
+                    }}
+                >
+                    Add Today's Sales
+                </Typography>
+            </Box>
+            <List sx={{ py: 0 }}>
                 {products.map((product) => (
-                    <ListItem key={product._id} divider>
+                    <ListItem 
+                        key={product._id} 
+                        divider
+                        sx={{
+                            py: { xs: 2, sm: 1 },
+                            px: { xs: 1, sm: 2 },
+                            flexWrap: { xs: 'wrap', sm: 'nowrap' },
+                            alignItems: { xs: 'flex-start', sm: 'center' },
+                            gap: { xs: 1, sm: 0 }
+                        }}
+                    >
                         <ListItemText 
-                            primary={product.productName} 
-                            secondary={`In Stock: ${product.quantityInStock}`} 
+                            primary={
+                                <Typography 
+                                    variant="body1"
+                                    sx={{
+                                        fontSize: { xs: '1rem', sm: '1rem' },
+                                        fontWeight: '500',
+                                        mb: { xs: 0.5, sm: 0 }
+                                    }}
+                                >
+                                    {product.productName}
+                                </Typography>
+                            }
+                            secondary={
+                                <Typography 
+                                    variant="body2" 
+                                    color="text.secondary"
+                                    sx={{ fontSize: { xs: '0.875rem', sm: '0.875rem' } }}
+                                >
+                                    In Stock: {product.quantityInStock}
+                                </Typography>
+                            }
+                            sx={{ 
+                                flex: { xs: '1 1 100%', sm: '1' },
+                                mb: { xs: 1, sm: 0 }
+                            }}
                         />
                         <TextField
                             type="number"
                             label="Qty Sold"
                             size="small"
-                            sx={{ width: '100px' }}
+                            sx={{ 
+                                width: { xs: '120px', sm: '100px' },
+                                '& .MuiInputBase-root': {
+                                    height: { xs: 48, sm: 40 },
+                                    fontSize: { xs: '1rem', sm: '0.875rem' }
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: { xs: '1rem', sm: '0.875rem' }
+                                }
+                            }}
                             onChange={(e) => handleQuantityChange(product._id, e.target.value)}
                             inputProps={{ min: 0, max: product.quantityInStock }}
                         />
@@ -80,7 +141,13 @@ const AddSalePage = () => {
             <Button 
                 variant="contained" 
                 fullWidth 
-                sx={{ mt: 4 }}
+                sx={{ 
+                    mt: { xs: 3, sm: 4 },
+                    mb: { xs: 2, sm: 0 },
+                    height: { xs: 48, sm: 40 },
+                    fontSize: { xs: '1rem', sm: '0.875rem' },
+                    fontWeight: '600'
+                }}
                 onClick={handleSubmit}
             >
                 Submit Sale

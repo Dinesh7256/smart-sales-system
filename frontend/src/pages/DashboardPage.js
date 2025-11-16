@@ -108,64 +108,113 @@ const DashboardPage = () => {
                 }}
             >
                 <Container>
-                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                    <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap={{ xs: 'wrap', sm: 'nowrap' }} gap={2}>
                         <Box display="flex" alignItems="center" gap={2}>
                             <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)' }}>
                                 <BahiIcon />
                             </Avatar>
-                            <Typography variant="h5" fontWeight="600">
+                            <Typography variant={{ xs: 'h6', sm: 'h5' }} fontWeight="600">
                                 Bahi
                             </Typography>
                         </Box>
-                        <Box display="flex" gap={1}>
+                        <Box 
+                            display="flex" 
+                            gap={{ xs: 0.5, sm: 1 }}
+                            flexWrap={{ xs: 'wrap', md: 'nowrap' }}
+                            justifyContent={{ xs: 'center', sm: 'flex-end' }}
+                            width={{ xs: '100%', sm: 'auto' }}
+                        >
+                            <Button 
+                                component={RouterLink} 
+                                to="/sales-pad" 
+                                variant="contained"
+                                startIcon={<AddIcon />}
+                                size="small"
+                                sx={{ 
+                                    bgcolor: 'success.main',
+                                    '&:hover': { bgcolor: 'success.dark' },
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                                    minWidth: { xs: 'auto', sm: '120px' },
+                                    px: { xs: 1, sm: 2 },
+                                    height: { xs: 32, sm: 36 },
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>Smart Sales</Box>
+                                <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>Quick</Box>
+                            </Button>
                             <Button 
                                 component={RouterLink} 
                                 to="/inventory" 
                                 variant="outlined" 
                                 startIcon={<InventoryIcon />}
+                                size="small"
                                 sx={{ 
                                     color: 'white', 
                                     borderColor: 'rgba(255,255,255,0.3)',
-                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' },
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                                    minWidth: { xs: 'auto', sm: '120px' },
+                                    px: { xs: 1, sm: 2 },
+                                    height: { xs: 32, sm: 36 }
                                 }}
                             >
-                                Inventory
+                                <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>Inventory</Box>
+                                <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>Inv</Box>
                             </Button>
                             <Button 
                                 component={RouterLink} 
                                 to="/expenses" 
                                 variant="outlined"
                                 startIcon={<ExpenseIcon />}
+                                size="small"
                                 sx={{ 
                                     color: 'white', 
                                     borderColor: 'rgba(255,255,255,0.3)',
-                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' },
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                                    minWidth: { xs: 'auto', sm: '120px' },
+                                    px: { xs: 1, sm: 2 },
+                                    height: { xs: 32, sm: 36 }
                                 }}
                             >
-                                Expenses
+                                <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>Expenses</Box>
+                                <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>Exp</Box>
                             </Button>
                             <Button 
                                 variant="outlined" 
                                 startIcon={<ExpenseLogIcon />}
                                 onClick={() => setExpenseModalOpen(true)}
+                                size="small"
                                 sx={{ 
                                     color: 'white', 
                                     borderColor: 'rgba(255,255,255,0.3)',
-                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+                                    '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' },
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                                    minWidth: { xs: 'auto', sm: '120px' },
+                                    px: { xs: 1, sm: 2 },
+                                    height: { xs: 32, sm: 36 }
                                 }}
                             >
-                                Log Expense
+                                <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>Log Expense</Box>
+                                <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>Log</Box>
                             </Button>
                             <Button 
                                 variant="contained" 
                                 startIcon={<LogoutIcon />}
                                 onClick={handleLogout}
+                                size="small"
                                 sx={{ 
                                     bgcolor: 'error.main',
-                                    '&:hover': { bgcolor: 'error.dark' }
+                                    '&:hover': { bgcolor: 'error.dark' },
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                                    minWidth: { xs: 'auto', sm: '120px' },
+                                    px: { xs: 1, sm: 2 },
+                                    height: { xs: 32, sm: 36 }
                                 }}
                             >
-                                Logout
+                                <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>Logout</Box>
+                                <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}><LogoutIcon /></Box>
                             </Button>
                         </Box>
                     </Box>
@@ -173,16 +222,16 @@ const DashboardPage = () => {
             </Card>
 
             {/* Main Content */}
-            <Container sx={{ py: 3 }}>
+            <Container maxWidth="lg" sx={{ py: { xs: 2, sm: 3 }, px: { xs: 2, sm: 3 } }}>
                 {error && (
-                    <Card sx={{ mb: 3, bgcolor: 'error.light', color: 'error.contrastText' }}>
-                        <CardContent>
-                            <Typography>{error}</Typography>
+                    <Card sx={{ mb: { xs: 2, sm: 3 }, bgcolor: 'error.light', color: 'error.contrastText' }}>
+                        <CardContent sx={{ py: { xs: 1, sm: 2 } }}>
+                            <Typography variant="body2">{error}</Typography>
                         </CardContent>
                     </Card>
                 )}
                 
-                <Grid container spacing={3}>
+                <Grid container spacing={{ xs: 2, sm: 3 }}>
                     <Grid item xs={12} md={6}>
                         <ProfitMeter sales={sales} expenses={expenses} />
                     </Grid>
@@ -198,17 +247,21 @@ const DashboardPage = () => {
                 aria-label="add sale"
                 component={RouterLink}
                 to="/add-sale"
+                size="medium"
                 sx={{ 
                     position: 'fixed', 
-                    bottom: 24, 
-                    right: 24,
+                    bottom: { xs: 16, sm: 24 }, 
+                    right: { xs: 16, sm: 24 },
                     background: 'linear-gradient(45deg, #FF6B6B 30%, #FF8E8E 90%)',
                     '&:hover': {
                         background: 'linear-gradient(45deg, #E55555 30%, #FF6B6B 90%)',
-                    }
+                    },
+                    width: { xs: 56, sm: 64 },
+                    height: { xs: 56, sm: 64 },
+                    zIndex: 1000
                 }}
             >
-                <AddIcon />
+                <AddIcon sx={{ fontSize: { xs: 24, sm: 28 } }} />
             </Fab>
 
             {/* Expense Modal */}

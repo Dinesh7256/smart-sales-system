@@ -30,6 +30,24 @@ class ProductRepository extends CrudRepository {
             throw error;
         }
     }
+
+    async getAllByUser(userId, productType = null) {
+        try {
+            // Base query - filter by user
+            let query = { ownerId: userId };
+            
+            // Add product type filter if specified
+            if (productType) {
+                query.productType = productType;
+            }
+            
+            const response = await Product.find(query);
+            return response;
+        } catch (error) {
+            console.log("Something went wrong in product repo - getAllByUser");
+            throw error;
+        }
+    }
 }
 
 export default new ProductRepository();

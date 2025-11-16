@@ -32,8 +32,19 @@ const addProduct = async (productData) => {
     return response.data;
 };
 
+const getProductsByType = async (type) => {
+    const token = localStorage.getItem('token');
+    const response = await axios.get(`${API_URL}/products?type=${type}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return response.data;
+};
+
 const productService = {
     getProducts,
+    getProductsByType,
     addProduct,
     restockProduct,
 };

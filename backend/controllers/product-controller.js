@@ -101,7 +101,10 @@ export const getProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try {
-        const response = await productService.getAllProducts();
+        const userId = req.user.id;
+        const productType = req.query.type; // Get the type query parameter
+        
+        const response = await productService.getAllProducts(userId, productType);
         return res.status(200).json({
             success: true,
             message: 'Successfully retrieved all products',

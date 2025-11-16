@@ -14,6 +14,7 @@ import ExpensesPage from './pages/ExpensesPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AddSalePage from './pages/AddSalePage';
+import SalesPadPage from './pages/SalesPadPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/inventory" element={<InventoryPage />} />
             <Route path="/expenses" element={<ExpensesPage />} />
             <Route path="/add-sale" element={<AddSalePage />} />
+            <Route path="/sales-pad" element={<SalesPadPage />} />
             <Route path="/" element={<DashboardPage />} />
           </Route>
         </Routes>

@@ -44,21 +44,55 @@ const LoginPage = () => {
     };
 
     return (
-        <Container component="main" maxWidth="xs" sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Container 
+            component="main" 
+            maxWidth="xs" 
+            sx={{ 
+                minHeight: '100vh', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                px: { xs: 2, sm: 3 },
+                py: { xs: 2, sm: 0 }
+            }}
+        >
             <Backdrop open={loading} sx={{ color: '#1976d2', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <CircularProgress size={64} thickness={5} color="primary" />
                 </Box>
             </Backdrop>
-            <Paper elevation={6} sx={{ borderRadius: 4, width: '100%', p: 4, background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
+            <Paper 
+                elevation={6} 
+                sx={{ 
+                    borderRadius: { xs: 3, sm: 4 }, 
+                    width: '100%', 
+                    p: { xs: 3, sm: 4 }, 
+                    background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+                    maxWidth: { xs: '100%', sm: '400px' }
+                }}
+            >
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Typography component="h1" variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
+                    <Typography 
+                        component="h1" 
+                        variant={{ xs: 'h6', sm: 'h5' }} 
+                        sx={{ 
+                            mb: 2, 
+                            fontWeight: 600,
+                            fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                            textAlign: 'center'
+                        }}
+                    >
                         {t('login.title')}
                     </Typography>
                     <FormControlLabel
                         control={<Switch onChange={handleLanguageChange} />}
                         label={i18n.language === 'hi' ? 'हिंदी' : 'English'}
-                        sx={{ mb: 2 }}
+                        sx={{ 
+                            mb: 2,
+                            '& .MuiFormControlLabel-label': {
+                                fontSize: { xs: '0.9rem', sm: '1rem' }
+                            }
+                        }}
                     />
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
                         <TextField
@@ -68,8 +102,22 @@ const LoginPage = () => {
                             label={t('login.email')}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            sx={{ borderRadius: 2, background: '#fff' }}
-                            InputProps={{ style: { borderRadius: 16 } }}
+                            sx={{ 
+                                borderRadius: 2, 
+                                background: '#fff',
+                                '& .MuiInputBase-root': {
+                                    height: { xs: 52, sm: 48 },
+                                    fontSize: { xs: '1rem', sm: '0.875rem' }
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: { xs: '1rem', sm: '0.875rem' }
+                                }
+                            }}
+                            InputProps={{ 
+                                style: { 
+                                    borderRadius: 16
+                                }
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -79,11 +127,32 @@ const LoginPage = () => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            sx={{ borderRadius: 2, background: '#fff' }}
-                            InputProps={{ style: { borderRadius: 16 } }}
+                            sx={{ 
+                                borderRadius: 2, 
+                                background: '#fff',
+                                '& .MuiInputBase-root': {
+                                    height: { xs: 52, sm: 48 },
+                                    fontSize: { xs: '1rem', sm: '0.875rem' }
+                                },
+                                '& .MuiInputLabel-root': {
+                                    fontSize: { xs: '1rem', sm: '0.875rem' }
+                                }
+                            }}
+                            InputProps={{ 
+                                style: { 
+                                    borderRadius: 16
+                                }
+                            }}
                         />
                         {error && (
-                            <Typography color="error" align="center" sx={{ mt: 2 }}>
+                            <Typography 
+                                color="error" 
+                                align="center" 
+                                sx={{ 
+                                    mt: 2,
+                                    fontSize: { xs: '0.875rem', sm: '0.875rem' }
+                                }}
+                            >
                                 {error}
                             </Typography>
                         )}
@@ -91,7 +160,15 @@ const LoginPage = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2, borderRadius: 3, fontWeight: 600, fontSize: '1rem', boxShadow: 2 }}
+                            sx={{ 
+                                mt: 3, 
+                                mb: 2, 
+                                borderRadius: 3, 
+                                fontWeight: 600, 
+                                fontSize: { xs: '1rem', sm: '1rem' }, 
+                                boxShadow: 2,
+                                height: { xs: 48, sm: 44 }
+                            }}
                             disabled={loading}
                         >
                             {t('login.button')}

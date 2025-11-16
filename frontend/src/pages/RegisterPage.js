@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { Container, Box, Typography, TextField, Button, Link, Paper, Switch, FormControlLabel } from '@mui/material';
+import { Container, Box, Typography, TextField, Button, Link, Paper, Switch, FormControlLabel, IconButton } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import authService from '../services/authService';
 
 const RegisterPage = () => {
@@ -33,9 +34,21 @@ const RegisterPage = () => {
         <Container component="main" maxWidth="xs" sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Paper elevation={6} sx={{ borderRadius: 4, width: '100%', p: 4, background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Typography component="h1" variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
-                        {t('register.title')}
-                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, width: '100%' }}>
+                        <IconButton 
+                            onClick={() => navigate(-1)}
+                            sx={{ 
+                                color: 'text.primary',
+                                '&:hover': { bgcolor: 'action.hover' }
+                            }}
+                        >
+                            <ArrowBack />
+                        </IconButton>
+                        <Typography component="h1" variant="h5" sx={{ fontWeight: 600, flex: 1, textAlign: 'center' }}>
+                            {t('registerTitle')}
+                        </Typography>
+                        <Box sx={{ width: 40 }} />
+                    </Box>
                     <FormControlLabel
                         control={<Switch checked={i18n.language === 'hi'} onChange={handleLanguageChange} />}
                         label={i18n.language === 'hi' ? 'हिंदी' : 'English'}

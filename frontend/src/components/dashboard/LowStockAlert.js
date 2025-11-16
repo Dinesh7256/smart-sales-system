@@ -26,14 +26,25 @@ const LowStockAlert = ({ products }) => {
 
     const renderProductList = (productList, title, bgColor, textColor = '#2C3E50') => (
         <Box mb={2}>
-            <Box display="flex" alignItems="center" gap={1} mb={1}>
-                <Typography variant="subtitle1" fontWeight="600" color={textColor}>
+            <Box display="flex" alignItems="center" gap={1} mb={{ xs: 0.5, sm: 1 }} flexWrap="wrap">
+                <Typography 
+                    variant={{ xs: 'body2', sm: 'subtitle1' }} 
+                    fontWeight="600" 
+                    color={textColor}
+                    sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}
+                >
                     {title}
                 </Typography>
                 <Chip 
                     label={productList.length} 
                     size="small" 
-                    sx={{ bgcolor: bgColor, color: 'white', fontWeight: 'bold' }}
+                    sx={{ 
+                        bgcolor: bgColor, 
+                        color: 'white', 
+                        fontWeight: 'bold',
+                        fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                        height: { xs: 20, sm: 24 }
+                    }}
                 />
             </Box>
             {productList.length === 0 ? (
@@ -41,25 +52,47 @@ const LowStockAlert = ({ products }) => {
                     None
                 </Typography>
             ) : (
-                <List dense>
+                <List dense={false} sx={{ py: 0 }}>
                     {productList.slice(0, 3).map(product => {
                         const stockStatus = getStockStatus(product.quantityInStock);
                         const StatusIcon = stockStatus.icon;
                         return (
-                            <ListItem key={product._id} sx={{ py: 0.5 }}>
+                            <ListItem 
+                                key={product._id} 
+                                sx={{ 
+                                    py: { xs: 1, sm: 0.5 },
+                                    px: { xs: 1, sm: 2 },
+                                    minHeight: { xs: 56, sm: 48 }
+                                }}
+                            >
                                 <ListItemAvatar>
-                                    <Avatar sx={{ bgcolor: stockStatus.color, width: 32, height: 32 }}>
-                                        <StatusIcon sx={{ fontSize: 18 }} />
+                                    <Avatar sx={{ 
+                                        bgcolor: stockStatus.color, 
+                                        width: { xs: 36, sm: 32 }, 
+                                        height: { xs: 36, sm: 32 }
+                                    }}>
+                                        <StatusIcon sx={{ fontSize: { xs: 20, sm: 18 } }} />
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={
-                                        <Typography variant="body2" fontWeight="500">
+                                        <Typography 
+                                            variant={{ xs: 'body2', sm: 'body2' }} 
+                                            fontWeight="500"
+                                            sx={{ 
+                                                fontSize: { xs: '0.9rem', sm: '0.875rem' },
+                                                lineHeight: 1.2
+                                            }}
+                                        >
                                             {product.productName}
                                         </Typography>
                                     }
                                     secondary={
-                                        <Typography variant="caption" color="text.secondary">
+                                        <Typography 
+                                            variant="caption" 
+                                            color="text.secondary"
+                                            sx={{ fontSize: { xs: '0.75rem', sm: '0.75rem' } }}
+                                        >
                                             Stock: {product.quantityInStock}
                                         </Typography>
                                     }
@@ -68,7 +101,16 @@ const LowStockAlert = ({ products }) => {
                         );
                     })}
                     {productList.length > 3 && (
-                        <Typography variant="caption" color="text.secondary" sx={{ ml: 2 }}>
+                        <Typography 
+                            variant="caption" 
+                            color="text.secondary" 
+                            sx={{ 
+                                ml: { xs: 2, sm: 2 },
+                                fontSize: { xs: '0.75rem', sm: '0.75rem' },
+                                display: 'block',
+                                py: 1
+                            }}
+                        >
                             +{productList.length - 3} more
                         </Typography>
                     )}
@@ -80,12 +122,16 @@ const LowStockAlert = ({ products }) => {
     return (
         <Card elevation={2}>
             <CardContent>
-                <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-                    <Typography variant="h6" fontWeight="600" color="text.primary">
+                <Box display="flex" alignItems="center" justifyContent="space-between" mb={{ xs: 2, sm: 3 }} flexWrap="wrap">
+                    <Typography variant={{ xs: 'subtitle1', sm: 'h6' }} fontWeight="600" color="text.primary">
                         Stock Overview
                     </Typography>
-                    <Avatar sx={{ bgcolor: 'primary.main' }}>
-                        <Inventory2 />
+                    <Avatar sx={{ 
+                        bgcolor: 'primary.main',
+                        width: { xs: 32, sm: 40 },
+                        height: { xs: 32, sm: 40 }
+                    }}>
+                        <Inventory2 sx={{ fontSize: { xs: 18, sm: 24 } }} />
                     </Avatar>
                 </Box>
 

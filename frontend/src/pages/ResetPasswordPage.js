@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Box, Typography, TextField, Button, Paper, Backdrop, CircularProgress } from '@mui/material';
+import { Container, Box, Typography, TextField, Button, Paper, Backdrop, CircularProgress, IconButton } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import authService from '../services/authService';
 
 const MIN_LOADING_TIME = 1500;
@@ -53,9 +54,21 @@ const ResetPasswordPage = () => {
             </Backdrop>
             <Paper elevation={6} sx={{ borderRadius: 4, width: '100%', p: 4, background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
                 <Box sx={{ marginTop: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Typography component="h1" variant="h5">
-                        Reset Your Password
-                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, width: '100%' }}>
+                        <IconButton 
+                            onClick={() => navigate(-1)}
+                            sx={{ 
+                                color: 'text.primary',
+                                '&:hover': { bgcolor: 'action.hover' }
+                            }}
+                        >
+                            <ArrowBack />
+                        </IconButton>
+                        <Typography component="h1" variant="h5" sx={{ flex: 1, textAlign: 'center' }}>
+                            Reset Your Password
+                        </Typography>
+                        <Box sx={{ width: 40 }} />
+                    </Box>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
                         <TextField
                             margin="normal" required fullWidth
